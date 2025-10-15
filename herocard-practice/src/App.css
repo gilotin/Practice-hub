@@ -1,0 +1,55 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.wrapper {
+
+  background-color: rgb(38, 38, 51);
+  /* display: flex; */
+  border: 4px solid white;
+  padding: .6rem;
+  border-radius: .4rem;
+  outline: 3px solid grey;
+  gap: 2rem
+}
+
+.moods {
+  display: flex;
+  gap: 1rem;
+
+  :hover {
+    background-color: black;
+  }
+}
+
+.btn {
+  background-color: darkcyan;
+  border: 4px solid white;
+
+
+}
+
+.redact {
+  margin: 1rem 0;
+}
+
+#undo {
+  background-color: rgb(66, 34, 34);
+}
+
+.history {
+  margin: 1rem;
+  min-height: 6rem;
+  padding: 1rem;
+  border: 1px solid white;
+  border-radius: .6rem;
+}
+
+.top-mood {
+  margin: 1rem;
+  border: 1px solid white;
+  border-radius: .6rem;
+}
