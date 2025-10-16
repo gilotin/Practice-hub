@@ -1,10 +1,11 @@
 import "./App.css";
-import { TestPractice } from "./timerPractice/TimePractice";
+import { QuietTimes } from "./Eloquent-practice/QuietTimes";
+import { TimePracticeDisplay } from "./timerPractice/TimePractice";
 
 function App() {
     return (
         <>
-            <TestPractice />
+            <TimePracticeDisplay />
         </>
     );
 }
