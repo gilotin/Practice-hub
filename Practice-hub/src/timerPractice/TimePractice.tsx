@@ -13,19 +13,19 @@ export function TimePracticeDisplay() {
     }
 
     useEffect(() => {
-        setDelayedStart((prevState) => generateNumber());
+        setDelayedStart(generateNumber());
     }, []);
 
     function OnClickStartBtn(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
-        setLockButton((prevState) => true);
+        setLockButton(true);
         setTimeout(() => {
             setShowCountdown((prevState) => !prevState);
-            setStartTime((prevState) => generateTime());
+            setStartTime(generateTime());
         }, delayedStart);
     }
 
-    function onClickResetBtn(e: React.MouseEvent<HTMLButtonElement>) {
+    function onClickResetBtn() {
         setDelayedStart(generateNumber());
         setShowCountdown(false);
         setLockButton(false);
