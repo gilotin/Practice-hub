@@ -1,4 +1,4 @@
-import { useEffect, useState, type MouseEventHandler } from "react";
+import { useEffect, useState } from "react";
 
 type PokemonData = {
     id: number;
@@ -30,33 +30,43 @@ type PokemonData = {
     ];
 };
 
+type allNamesList = {
+    results: {
+        names: string;
+    };
+};
+
 export function PokemonCard() {
     const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
+    const [allNamesList, setAllNamesList] = useState<allNamesList | null>(null);
 
     const url: string = `https://pokeapi.co/api/v2/pokemon/${"1"}`;
+    const fetchAllNamesUrl: string = "https://pokeapi.co/api/v2/pokemon/?limit=10000";
 
     useEffect(() => {
         const controller = new AbortController();
         const signal = controller.signal;
 
-        async function fetchData() {
+        async function fetchData<T>(
+            url: string,
+            setState: React.Dispatch<React.SetStateAction<T>>,
+            signal: AbortSignal
+        ) {
             try {
                 const response = await fetch(url, { signal });
-                if (!response.ok) {
-                    throw new Error(`Response status:${response.status}`);
-                }
+                if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
                 const data = await response.json();
-                setPokemonData(data);
+                setState(data);
             } catch (err: unknown) {
-                if (err instanceof Error) {
-                    if (err.name !== "AbortError") {
-                        console.error(err);
-                    }
+                if (err instanceof Error && err.name !== "AbortError") {
+                    console.error(err.message);
                 }
             }
         }
 
-        fetchData();
+        fetchData(url, setPokemonData, signal);
+        fetchData(fetchAllNamesUrl, setAllNamesList, signal);
+
         return () => {
             controller.abort();
         };
@@ -76,7 +86,7 @@ export function PokemonCard() {
 
     return (
         <>
-            {console.log(pokemonData)}
+            {console.log(allNamesList)}
             <div className="wrapper">
                 <h1>Pokemon Cards</h1>
                 <form method="POST">
