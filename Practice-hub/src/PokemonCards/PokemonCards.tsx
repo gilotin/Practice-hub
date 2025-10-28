@@ -5,6 +5,11 @@ type PokemonData = {
     name: string;
     sprites: {
         front_default: string;
+        other: {
+            "official-artwork": {
+                front_default: string;
+            };
+        };
     };
     height: number;
     weight: number;
@@ -35,8 +40,8 @@ export function PokemonCard() {
         const signal = controller.signal;
 
         async function fetchData() {
-            const response = await fetch(url, { signal });
             try {
+                const response = await fetch(url, { signal });
                 if (!response.ok) {
                     throw new Error(`Response status:${response.status}`);
                 }
@@ -44,11 +49,9 @@ export function PokemonCard() {
                 setPokemonData(data);
             } catch (err: unknown) {
                 if (err instanceof Error) {
-                    if (err.name === "AbortError") {
-                        console.log("Fetch aborted");
+                    if (err.name !== "AbortError") {
+                        console.error(err);
                     }
-                } else {
-                    console.error(err);
                 }
             }
         }
@@ -68,7 +71,7 @@ export function PokemonCard() {
     });
 
     const pokemonTypes = pokemonData?.types.map((pokemonType, typeId) => {
-        return <li key={typeId + 0.1}>{pokemonType?.type.name}</li>;
+        return <li key={typeId}>{pokemonType?.type.name}</li>;
     });
 
     return (
@@ -86,7 +89,9 @@ export function PokemonCard() {
                 <div className="wrapper">
                     <h2 className="pokemon-card__header">{pokemonData?.name}</h2>
                     <img
-                        src={pokemonData?.sprites.front_default}
+                        width="200px"
+                        // hard coded for now !!!
+                        src={pokemonData?.sprites?.other["official-artwork"].front_default}
                         alt={`pokemon named${pokemonData?.name}`}
                     />
                     <p className="pokemon-card__description">some description with flavour text</p>
