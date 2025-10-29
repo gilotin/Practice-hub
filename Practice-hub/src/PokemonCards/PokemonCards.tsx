@@ -39,8 +39,9 @@ type allNamesList = {
 export function PokemonCard() {
     const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
     const [allNamesList, setAllNamesList] = useState<allNamesList | null>(null);
+    const [searchResult, getSearchResult] = useState<string>("1");
 
-    const url: string = `https://pokeapi.co/api/v2/pokemon/${"1"}`;
+    const url: string = `https://pokeapi.co/api/v2/pokemon/${searchResult}`;
     const fetchAllNamesUrl: string = "https://pokeapi.co/api/v2/pokemon/?limit=10000";
 
     useEffect(() => {
@@ -84,14 +85,22 @@ export function PokemonCard() {
         return <li key={typeId}>{pokemonType?.type.name}</li>;
     });
 
+    function search(formData: FormData) {
+        const query = formData.get("query");
+
+        if (typeof query === "string") {
+            getSearchResult(query);
+        }
+    }
+
     return (
         <>
             {console.log(allNamesList)}
             <div className="wrapper">
                 <h1>Pokemon Cards</h1>
-                <form method="POST">
-                    <input type="text" placeholder="Pokemon..." />
-                    <button>SEARCH</button>
+                <form action={search}>
+                    <input type="text" name="query" placeholder="Enter name or ID" />
+                    <button type="submit">SEARCH</button>
                 </form>
             </div>
 
