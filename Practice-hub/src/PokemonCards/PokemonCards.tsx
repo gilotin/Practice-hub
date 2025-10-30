@@ -55,6 +55,10 @@ export function PokemonCard() {
         ) {
             try {
                 const response = await fetch(url, { signal });
+                if (response.status === 404) {
+                    throw new Error(`Your Pokomen is in another ball. Try again.`);
+                    // add Error state and visualize it
+                }
                 if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
                 const data = await response.json();
                 setState(data);
@@ -95,7 +99,7 @@ export function PokemonCard() {
 
     return (
         <>
-            {console.log(allNamesList)}
+            {console.log(pokemonData)}
             <div className="wrapper">
                 <h1>Pokemon Cards</h1>
                 <form action={search}>
