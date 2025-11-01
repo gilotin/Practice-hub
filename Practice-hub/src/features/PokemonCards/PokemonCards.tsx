@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type JSX } from "react";
+import fetchData from "./api/fetchpokemonData";
 
 type PokemonData = {
     id: number;
@@ -40,6 +41,7 @@ export function PokemonCard() {
     const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
     const [allNamesList, setAllNamesList] = useState<allNamesList | null>(null);
     const [searchResult, getSearchResult] = useState<string>("1");
+    const [errorHandler, setErrorHandler] = useState<string | null>(null);
 
     const url: string = `https://pokeapi.co/api/v2/pokemon/${searchResult}`;
     const fetchAllNamesUrl: string = "https://pokeapi.co/api/v2/pokemon/?limit=10000";
@@ -48,35 +50,24 @@ export function PokemonCard() {
         const controller = new AbortController();
         const signal = controller.signal;
 
-        async function fetchData<T>(
-            url: string,
-            setState: React.Dispatch<React.SetStateAction<T>>,
-            signal: AbortSignal
-        ) {
+        const getPokemonData = async () => {
             try {
-                const response = await fetch(url, { signal });
-                if (response.status === 404) {
-                    throw new Error(`Your Pokomen is in another ball. Try again.`);
-                    // add Error state and visualize it
-                }
-                if (!response.ok) throw new Error(`Fetch failed: ${response.status}`);
-                const data = await response.json();
-                setState(data);
+                const data = await fetchData<PokemonData>(url, signal);
+                setPokemonData(data);
             } catch (err: unknown) {
                 if (err instanceof Error && err.name !== "AbortError") {
-                    console.error(err.message);
+                    setErrorHandler(err.message); // component decides how to show errors
                 }
             }
-        }
-
-        fetchData(url, setPokemonData, signal);
-        fetchData(fetchAllNamesUrl, setAllNamesList, signal);
+        };
+        getPokemonData();
 
         return () => {
             controller.abort();
         };
     }, [url]);
 
+    // LATTER TO ABSTRACT THE MAPS!!!
     const pokemonStats = pokemonData?.stats.map((pokemonStats, statId) => {
         return (
             <li key={statId}>
@@ -99,7 +90,6 @@ export function PokemonCard() {
 
     return (
         <>
-            {console.log(pokemonData)}
             <div className="wrapper">
                 <h1>Pokemon Cards</h1>
                 <form action={search}>
@@ -124,10 +114,6 @@ export function PokemonCard() {
                     <ul className="pokemon-card__measures">
                         <li>height: {pokemonData?.height}</li>
                         <li>weight {pokemonData?.weight}</li>
-                    </ul>
-                    <ul className="pokemon-card__abilities">
-                        <li>Attack1:</li>
-                        <li>Attack2:</li>
                     </ul>
                 </div>
             </section>

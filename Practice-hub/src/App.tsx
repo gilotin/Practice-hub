@@ -1,5 +1,5 @@
 import "./App.css";
-import { PokemonCard } from "./PokemonCards/PokemonCards";
+import { PokemonCard } from "./features/PokemonCards/PokemonCards";
 // import { TimePracticeDisplay } from "./timerPractice/TimePractice";
 
 function App() {
