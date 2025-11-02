@@ -1,5 +1,6 @@
-import { useEffect, useState, type JSX } from "react";
-import fetchData from "./api/fetchpokemonData";
+import { useEffect, useState } from "react";
+import fetchData from "./api/fetchPokemonData";
+import fetchAllPokemonNames from "./api/fetchAllPokemonName";
 
 type PokemonData = {
     id: number;
@@ -31,20 +32,25 @@ type PokemonData = {
     ];
 };
 
-type allNamesList = {
-    results: {
-        names: string;
-    };
+type PokemonListItem = {
+    name: string;
+    url: string;
+};
+
+type PokemonListResponse = {
+    count: number;
+    next: string | null;
+    previous: string | null;
+    results: PokemonListItem[];
 };
 
 export function PokemonCard() {
     const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
-    const [allNamesList, setAllNamesList] = useState<allNamesList | null>(null);
+    const [allNamesList, setAllNamesList] = useState<string[] | null>(null);
     const [searchResult, getSearchResult] = useState<string>("1");
     const [errorHandler, setErrorHandler] = useState<string | null>(null);
 
     const url: string = `https://pokeapi.co/api/v2/pokemon/${searchResult}`;
-    const fetchAllNamesUrl: string = "https://pokeapi.co/api/v2/pokemon/?limit=10000";
 
     useEffect(() => {
         const controller = new AbortController();
@@ -66,6 +72,25 @@ export function PokemonCard() {
             controller.abort();
         };
     }, [url]);
+
+    useEffect(() => {
+        const controller = new AbortController();
+        const signal = controller.signal;
+
+        const getAllPokemonNames = async () => {
+            fetchAllPokemonNames(signal)
+                .then(setAllNamesList)
+                .catch((err) => {
+                    if (err instanceof Error && err.name !== "AbortError") {
+                        setErrorHandler(err.message);
+                    }
+                });
+        };
+        getAllPokemonNames();
+        return () => {
+            controller.abort();
+        };
+    }, []);
 
     // LATTER TO ABSTRACT THE MAPS!!!
     const pokemonStats = pokemonData?.stats.map((pokemonStats, statId) => {
@@ -103,7 +128,7 @@ export function PokemonCard() {
                     <h2 className="pokemon-card__header">{pokemonData?.name}</h2>
                     <img
                         width="200px"
-                        // hard coded for now !!!
+                        // width is hard coded for now !!!
                         src={pokemonData?.sprites?.other["official-artwork"].front_default}
                         alt={`pokemon named${pokemonData?.name}`}
                     />
