@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import fetchData from "./api/fetchPokemonData";
 import fetchAllPokemonNames from "./api/fetchAllPokemonName";
+import SearchBar from "../SearchBar/SearchBar";
 
 type PokemonData = {
     id: number;
@@ -47,7 +48,7 @@ type PokemonListResponse = {
 export function PokemonCard() {
     const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
     const [allNamesList, setAllNamesList] = useState<string[] | null>(null);
-    const [searchResult, getSearchResult] = useState<string>("1");
+    const [searchResult, setSearchResult] = useState<string>("1");
     const [errorHandler, setErrorHandler] = useState<string | null>(null);
 
     const url: string = `https://pokeapi.co/api/v2/pokemon/${searchResult}`;
@@ -105,23 +106,9 @@ export function PokemonCard() {
         return <li key={typeId}>{pokemonType?.type.name}</li>;
     });
 
-    function search(formData: FormData) {
-        const query = formData.get("query");
-
-        if (typeof query === "string") {
-            getSearchResult(query);
-        }
-    }
-
     return (
         <>
-            <div className="wrapper">
-                <h1>Pokemon Cards</h1>
-                <form action={search}>
-                    <input type="text" name="query" placeholder="Enter name or ID" />
-                    <button type="submit">SEARCH</button>
-                </form>
-            </div>
+            <SearchBar setSearchResult={setSearchResult} />
 
             <section className="pokemon-card">
                 <div className="wrapper">
