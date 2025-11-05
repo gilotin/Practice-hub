@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import fetchData from "./api/fetchPokemonData";
-import fetchAllPokemonNames from "./api/fetchAllPokemonName";
 import SearchBar from "../SearchBar/SearchBar";
 
 type PokemonData = {
@@ -33,21 +32,8 @@ type PokemonData = {
     ];
 };
 
-type PokemonListItem = {
-    name: string;
-    url: string;
-};
-
-type PokemonListResponse = {
-    count: number;
-    next: string | null;
-    previous: string | null;
-    results: PokemonListItem[];
-};
-
 export function PokemonCard() {
     const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
-    const [allNamesList, setAllNamesList] = useState<string[] | null>(null);
     const [searchResult, setSearchResult] = useState<string>("1");
     const [errorHandler, setErrorHandler] = useState<string | null>(null);
 
@@ -74,25 +60,6 @@ export function PokemonCard() {
         };
     }, [url]);
 
-    useEffect(() => {
-        const controller = new AbortController();
-        const signal = controller.signal;
-
-        const getAllPokemonNames = async () => {
-            fetchAllPokemonNames(signal)
-                .then(setAllNamesList)
-                .catch((err) => {
-                    if (err instanceof Error && err.name !== "AbortError") {
-                        setErrorHandler(err.message);
-                    }
-                });
-        };
-        getAllPokemonNames();
-        return () => {
-            controller.abort();
-        };
-    }, []);
-
     // LATTER TO ABSTRACT THE MAPS!!!
     const pokemonStats = pokemonData?.stats.map((pokemonStats, statId) => {
         return (
@@ -108,7 +75,7 @@ export function PokemonCard() {
 
     return (
         <>
-            <SearchBar setSearchResult={setSearchResult} />
+            <SearchBar setSearchResult={setSearchResult} setErrorHandler={setErrorHandler} />
 
             <section className="pokemon-card">
                 <div className="wrapper">
