@@ -1,8 +1,8 @@
 import type React from "react";
 import { useEffect, useState } from "react";
-import fetchAllPokemonNames from "../PokemonCards/api/fetchAllPokemonName";
-import fetchData from "../PokemonCards/api/fetchPokemonData";
-import { useDebounce } from "../../hooks/useDebounce";
+import fetchAllPokemonNames from "../api/fetchAllPokemonName";
+import fetchData from "../api/fetchPokemonData";
+import { useDebounce } from "../../../hooks/useDebounce";
 
 type SearchBarProps = {
     setSearchResult: React.Dispatch<React.SetStateAction<string>>;

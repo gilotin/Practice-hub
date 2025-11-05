@@ -1,16 +1,5 @@
+import type { PokemonListResponse } from "../types";
 import fetchData from "./fetchPokemonData";
-
-type PokemonListItem = {
-    name: string;
-    url: string;
-};
-
-type PokemonListResponse = {
-    count: number;
-    next: string | null;
-    previous: string | null;
-    results: PokemonListItem[];
-};
 
 export default async function fetchAllPokemonNames(signal: AbortSignal): Promise<string[]> {
     const maxLength = 14;

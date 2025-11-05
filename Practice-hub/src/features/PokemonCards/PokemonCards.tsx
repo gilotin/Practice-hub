@@ -1,36 +1,9 @@
 import { useEffect, useState } from "react";
 import fetchData from "./api/fetchPokemonData";
-import SearchBar from "../SearchBar/SearchBar";
-
-type PokemonData = {
-    id: number;
-    name: string;
-    sprites: {
-        front_default: string;
-        other: {
-            "official-artwork": {
-                front_default: string;
-            };
-        };
-    };
-    height: number;
-    weight: number;
-    stats: [
-        {
-            base_stat: number;
-            stat: {
-                name: string;
-            };
-        }
-    ];
-    types: [
-        {
-            type: {
-                name: string;
-            };
-        }
-    ];
-};
+import SearchBar from "./components/SearchBar";
+import type { PokemonData } from "./types";
+import styles from "./PokemonCard.module.css";
+import { mapToList } from "./helper/mapToList";
 
 export function PokemonCard() {
     const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
@@ -60,25 +33,22 @@ export function PokemonCard() {
         };
     }, [url]);
 
-    // LATTER TO ABSTRACT THE MAPS!!!
-    const pokemonStats = pokemonData?.stats.map((pokemonStats, statId) => {
-        return (
-            <li key={statId}>
-                {pokemonStats?.stat.name}:{pokemonStats?.base_stat}
-            </li>
-        );
-    });
+    const pokemonStats = mapToList(pokemonData?.stats, (stat, i) => (
+        <li key={i}>
+            {stat.stat.name}: {stat.base_stat}
+        </li>
+    ));
 
-    const pokemonTypes = pokemonData?.types.map((pokemonType, typeId) => {
-        return <li key={typeId}>{pokemonType?.type.name}</li>;
-    });
+    const pokemonTypes = mapToList(pokemonData?.types, (type, i) => (
+        <li key={i}> {type.type.name}</li>
+    ));
 
     return (
         <>
             <SearchBar setSearchResult={setSearchResult} setErrorHandler={setErrorHandler} />
 
-            <section className="pokemon-card">
-                <div className="wrapper">
+            <section className={styles.pokemon_card}>
+                <div className="pokemon__wrapper">
                     <h2 className="pokemon-card__header">{pokemonData?.name}</h2>
                     <img
                         width="200px"
@@ -86,7 +56,6 @@ export function PokemonCard() {
                         src={pokemonData?.sprites?.other["official-artwork"].front_default}
                         alt={`pokemon named${pokemonData?.name}`}
                     />
-                    <p className="pokemon-card__description">some description with flavour text</p>
                     <ul className="pokemon-card__types">{pokemonTypes}</ul>
 
                     <ul className="pokemon-card__stats">{pokemonStats}</ul>
