@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import fetchData from "./api/fetchPokemonData";
 import SearchBar from "./components/SearchBar";
 import type { ErrorState, PokemonData } from "./types";
 import styles from "./PokemonCard.module.css";
 import { mapToList } from "./helper/mapToList";
+import fetchData from "./api/fetchPokemonData";
 
 export function PokemonCard() {
     const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
