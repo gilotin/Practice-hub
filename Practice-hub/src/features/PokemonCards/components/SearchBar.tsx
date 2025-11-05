@@ -1,6 +1,6 @@
 import type React from "react";
 import { useEffect, useState } from "react";
-import fetchAllPokemonNames from "../../../api/fetchAllPokemonName";
+import fetchAllPokemonNames from "../api/fetchAllPokemonName";
 import { useDebounce } from "../../../hooks/useDebounce";
 import type { ErrorState } from "../types";
 

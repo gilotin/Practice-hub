@@ -1,4 +1,4 @@
-import type { PokemonListItem, PokemonListResponse } from "../features/PokemonCards/types";
+import type { PokemonListItem, PokemonListResponse } from "../types";
 import fetchData from "./fetchPokemonData";
 
 export default async function fetchAllPokemonNames(signal: AbortSignal): Promise<string[]> {
