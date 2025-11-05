@@ -1,7 +1,6 @@
 import type React from "react";
 import { useEffect, useState } from "react";
 import fetchAllPokemonNames from "../api/fetchAllPokemonName";
-import fetchData from "../api/fetchPokemonData";
 import { useDebounce } from "../../../hooks/useDebounce";
 
 type SearchBarProps = {
@@ -36,7 +35,7 @@ export default function SearchBar({ setSearchResult, setErrorHandler }: SearchBa
     function search(formData: FormData) {
         const searchedResult = formData.get("query");
 
-        if (typeof searchedResult === "string") {
+        if (typeof searchedResult === "string" && searchedResult.length > 0) {
             return setSearchResult(searchedResult);
         }
     }
