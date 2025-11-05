@@ -45,7 +45,6 @@ export function PokemonCard() {
 
     return (
         <>
-            {console.log(errorHandler.message)}
             <SearchBar setSearchResult={setSearchResult} setErrorHandler={setErrorHandler} />
 
             <section className={styles.pokemon_card}>
