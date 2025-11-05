@@ -2,10 +2,11 @@ import type React from "react";
 import { useEffect, useState } from "react";
 import fetchAllPokemonNames from "../api/fetchAllPokemonName";
 import { useDebounce } from "../../../hooks/useDebounce";
+import type { ErrorState } from "../types";
 
 type SearchBarProps = {
     setSearchResult: React.Dispatch<React.SetStateAction<string>>;
-    setErrorHandler: React.Dispatch<React.SetStateAction<string | null>>;
+    setErrorHandler: React.Dispatch<React.SetStateAction<ErrorState>>;
 };
 
 export default function SearchBar({ setSearchResult, setErrorHandler }: SearchBarProps) {
@@ -22,7 +23,7 @@ export default function SearchBar({ setSearchResult, setErrorHandler }: SearchBa
                 .then(setAllNamesList)
                 .catch((err) => {
                     if (err instanceof Error && err.name !== "AbortError") {
-                        setErrorHandler(err.message);
+                        setErrorHandler({ hasError: true, message: err.message });
                     }
                 });
         };

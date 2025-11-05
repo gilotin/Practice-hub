@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import fetchData from "./api/fetchPokemonData";
 import SearchBar from "./components/SearchBar";
-import type { PokemonData } from "./types";
+import type { ErrorState, PokemonData } from "./types";
 import styles from "./PokemonCard.module.css";
 import { mapToList } from "./helper/mapToList";
 
 export function PokemonCard() {
     const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
     const [searchResult, setSearchResult] = useState<string>("1");
-    const [errorHandler, setErrorHandler] = useState<string | null>(null);
+    const [errorHandler, setErrorHandler] = useState<ErrorState>({ hasError: false, message: "" });
 
     const url: string = `https://pokeapi.co/api/v2/pokemon/${searchResult}`;
 
@@ -22,7 +22,7 @@ export function PokemonCard() {
                 setPokemonData(data);
             } catch (err: unknown) {
                 if (err instanceof Error && err.name !== "AbortError") {
-                    setErrorHandler(err.message); // component decides how to show errors
+                    setErrorHandler({ hasError: true, message: err.message });
                 }
             }
         };
@@ -45,6 +45,7 @@ export function PokemonCard() {
 
     return (
         <>
+            {console.log(errorHandler.message)}
             <SearchBar setSearchResult={setSearchResult} setErrorHandler={setErrorHandler} />
 
             <section className={styles.pokemon_card}>

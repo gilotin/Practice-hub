@@ -28,6 +28,11 @@ export type PokemonData = {
     ];
 };
 
+export type ErrorState = {
+    hasError: boolean;
+    message: string;
+};
+
 export type PokemonListItem = {
     name: string;
     url: string;
