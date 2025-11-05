@@ -1,5 +1,5 @@
 import type { PokemonListItem, PokemonListResponse } from "../types";
-import fetchData from "./fetchPokemonData.js";
+import fetchData from "./fetchPokemonData";
 
 export default async function fetchAllPokemonNames(signal: AbortSignal): Promise<string[]> {
     const maxLength = 14;
