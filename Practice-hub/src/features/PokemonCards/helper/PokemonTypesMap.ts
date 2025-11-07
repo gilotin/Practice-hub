@@ -8,6 +8,7 @@ export const pokemonTypesMap: Record<string, string> = {
     flying: "/pokemonTypes/Pokemon_Type_Icon_Flying.png",
     ghost: "/pokemonTypes/Pokemon_Type_Icon_Ghost.png",
     grass: "/pokemonTypes/Pokemon_Type_Icon_Grass.png",
+    steel: "/pokemonTypes/Pokemon_Type_Icon_Steel.png",
     ground: "/pokemonTypes/Pokemon_Type_Icon_Ground.png",
     ice: "/pokemonTypes/Pokemon_Type_Icon_Ice.png",
     normal: "/pokemonTypes/Pokemon_Type_Icon_Normal.png",
