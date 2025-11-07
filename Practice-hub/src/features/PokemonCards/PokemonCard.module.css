@@ -6,6 +6,7 @@
   --dark-brown: #60443e; */
 
 
+
 *>li {
     list-style: none;
     display: flex;
@@ -30,6 +31,7 @@ ul {
     max-width: 22rem;
     min-height: 32rem;
     margin: 2rem auto;
+    position: relative;
 }
 
 
@@ -60,4 +62,21 @@ ul {
     gap: 1rem;
 }
 
-/* .pokemon_card__stats> {} */
+/* Back of the card */
+
+
+.pokemon_card__img {
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(1) opacity(20%);
+
+}
+
+.pokemon_card__text {
+    position: absolute;
+    align-self: center;
+
+}
+
+/* <div>Icons made from <a href="https://www.onlinewebfonts.com/icon">svg icons</a>is licensed by CC BY 4.0</div> */
