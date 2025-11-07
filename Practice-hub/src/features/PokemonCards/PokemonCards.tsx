@@ -36,7 +36,7 @@ export function PokemonCard() {
 
     const pokemonStats = mapToList(pokemonData?.stats, (stat, i) => (
         <li key={i}>
-            <div>{stat.stat.name.toUpperCase()}:</div> {stat.base_stat}
+            <div>{capitalizeFirstLetter(stat.stat.name)}:</div> {stat.base_stat}
         </li>
     ));
 
