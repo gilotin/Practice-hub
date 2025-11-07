@@ -1,0 +1,18 @@
+export const pokemonTypesMap: Record<string, string> = {
+    dark: "/pokemonTypes/Pokemon_Type_Icon_Dark.png",
+    dragon: "/pokemonTypes/Pokemon_Type_Icon_Dragon.png",
+    electric: "/pokemonTypes/Pokemon_Type_Icon_Electric.png",
+    fairy: "/pokemonTypes/Pokemon_Type_Icon_Fairy.png",
+    fighting: "/pokemonTypes/Pokemon_Type_Icon_Fighting.png",
+    fire: "/pokemonTypes/Pokemon_Type_Icon_Fire.png",
+    flying: "/pokemonTypes/Pokemon_Type_Icon_Flying.png",
+    ghost: "/pokemonTypes/Pokemon_Type_Icon_Ghost.png",
+    grass: "/pokemonTypes/Pokemon_Type_Icon_Grass.png",
+    ground: "/pokemonTypes/Pokemon_Type_Icon_Ground.png",
+    ice: "/pokemonTypes/Pokemon_Type_Icon_Ice.png",
+    normal: "/pokemonTypes/Pokemon_Type_Icon_Normal.png",
+    poison: "/pokemonTypes/Pokemon_Type_Icon_Poison.png",
+    psychic: "/pokemonTypes/Pokemon_Type_Icon_Psychic.png",
+    rock: "/pokemonTypes/Pokemon_Type_Icon_Rock.png",
+    water: "/pokemonTypes/Pokemon_Type_Icon_Water.png",
+};

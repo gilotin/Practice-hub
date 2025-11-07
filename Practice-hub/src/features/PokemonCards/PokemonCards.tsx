@@ -4,6 +4,7 @@ import type { ErrorState, PokemonData } from "./types";
 import styles from "./PokemonCard.module.css";
 import { mapToList } from "./helper/mapToList";
 import fetchData from "./api/fetchPokemonData";
+import { pokemonTypesMap } from "./helper/PokemonTypesMap";
 
 export function PokemonCard() {
     const [pokemonData, setPokemonData] = useState<PokemonData | null>(null);
@@ -41,7 +42,14 @@ export function PokemonCard() {
     ));
 
     const pokemonTypes = mapToList(pokemonData?.types, (type, i) => (
-        <li key={i}> {type.type.name}</li>
+        <li key={i}>
+            <img
+                height="30px"
+                width="30px"
+                src={pokemonTypesMap[type.type.name]}
+                alt={type.type.name}
+            />
+        </li>
     ));
 
     function capitalizeFirstLetter(string: string | undefined) {
