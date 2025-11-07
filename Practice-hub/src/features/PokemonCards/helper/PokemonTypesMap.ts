@@ -16,4 +16,5 @@ export const pokemonTypesMap: Record<string, string> = {
     psychic: "/pokemonTypes/Pokemon_Type_Icon_Psychic.png",
     rock: "/pokemonTypes/Pokemon_Type_Icon_Rock.png",
     water: "/pokemonTypes/Pokemon_Type_Icon_Water.png",
+    bug: "/pokemonTypes/Pokemon_Type_Icon_Bug.png",
 };
