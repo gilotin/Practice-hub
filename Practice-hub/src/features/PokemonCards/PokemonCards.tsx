@@ -44,6 +44,13 @@ export function PokemonCard() {
         <li key={i}> {type.type.name}</li>
     ));
 
+    function capitalizeFirstLetter(string: string | undefined) {
+        if (string === undefined) {
+            return;
+        }
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
     return (
         <>
             <SearchBar setSearchResult={setSearchResult} setErrorHandler={setErrorHandler} />
@@ -57,7 +64,9 @@ export function PokemonCard() {
                     <div className={styles.black_border}>
                         {" "}
                         <section className={styles.pokemon_card_front}>
-                            <h2 className={styles.pokemon_card__header}>{pokemonData?.name}</h2>
+                            <h2 className={styles.pokemon_card__header}>
+                                {capitalizeFirstLetter(pokemonData?.name)}
+                            </h2>
                             <div className={styles.image_border}>
                                 <ul className={styles.pokemon_card__types}>{pokemonTypes}</ul>
                                 <img
@@ -73,10 +82,10 @@ export function PokemonCard() {
                             <ul className={styles.pokemon_card__stats}>{pokemonStats}</ul>
                             <ul className="pokemon-card__measures">
                                 <li>
-                                    <div>height:</div> {pokemonData?.height}
+                                    <div>Height:</div> {pokemonData?.height}
                                 </li>
                                 <li>
-                                    <div>weight:</div>
+                                    <div>Weight:</div>
                                     {pokemonData?.weight}
                                 </li>
                             </ul>
