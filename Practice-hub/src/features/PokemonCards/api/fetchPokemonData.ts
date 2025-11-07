@@ -5,7 +5,7 @@ export default async function fetchData<T>(url: string, signal: AbortSignal): Pr
     }
 
     if (!response.ok) {
-        throw new Error(`Fetch failed: ${response.status}`);
+        throw new Error(`Fetch failed: ${response.status}.Try again.`);
     }
     const data: T = await response.json();
     return data;
