@@ -26,6 +26,7 @@ export function PokemonCard() {
                 }
             }
         };
+        setErrorHandler((prevState) => ({ ...prevState, hasError: false }));
         getPokemonData();
 
         return () => {
@@ -45,38 +46,44 @@ export function PokemonCard() {
 
     return (
         <>
-            {console.log(errorHandler)}
             <SearchBar setSearchResult={setSearchResult} setErrorHandler={setErrorHandler} />
-            {/* <div className={styles.pokemon_card}>
-                <p>This is the back of the card</p>
-            </div> */}
-            <div className={styles.pokemon_card}>
-                <div className={styles.black_border}>
-                    {" "}
-                    <section className={styles.pokemon_card_front}>
-                        <h2 className={styles.pokemon_card__header}>{pokemonData?.name}</h2>
-                        <div className={styles.image_border}>
-                            <ul className={styles.pokemon_card__types}>{pokemonTypes}</ul>
-                            <img
-                                className={styles.pokemon_card_img}
-                                src={pokemonData?.sprites?.other["official-artwork"].front_default}
-                                alt={`pokemon named${pokemonData?.name}`}
-                            />
-                        </div>
-
-                        <ul className={styles.pokemon_card__stats}>{pokemonStats}</ul>
-                        <ul className="pokemon-card__measures">
-                            <li>
-                                <div>height:</div> {pokemonData?.height}
-                            </li>
-                            <li>
-                                <div>weight:</div>
-                                {pokemonData?.weight}
-                            </li>
-                        </ul>
-                    </section>
+            {errorHandler.hasError ? (
+                <div className={styles.pokemon_card}>
+                    <img className={styles.pokemon_card__img} src="/poketball.png" alt="" />
+                    <p className={styles.pokemon_card__text}>{errorHandler?.message}</p>
                 </div>
-            </div>
+            ) : (
+                <div className={styles.pokemon_card}>
+                    <div className={styles.black_border}>
+                        {" "}
+                        <section className={styles.pokemon_card_front}>
+                            <h2 className={styles.pokemon_card__header}>{pokemonData?.name}</h2>
+                            <div className={styles.image_border}>
+                                <ul className={styles.pokemon_card__types}>{pokemonTypes}</ul>
+                                <img
+                                    className={styles.pokemon_card_img}
+                                    src={
+                                        pokemonData?.sprites?.other["official-artwork"]
+                                            .front_default
+                                    }
+                                    alt={`pokemon named${pokemonData?.name}`}
+                                />
+                            </div>
+
+                            <ul className={styles.pokemon_card__stats}>{pokemonStats}</ul>
+                            <ul className="pokemon-card__measures">
+                                <li>
+                                    <div>height:</div> {pokemonData?.height}
+                                </li>
+                                <li>
+                                    <div>weight:</div>
+                                    {pokemonData?.weight}
+                                </li>
+                            </ul>
+                        </section>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
