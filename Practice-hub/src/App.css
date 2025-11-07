@@ -1,20 +1,38 @@
 #root {
   font-family: 'Press Start 2P', monospace;
-  max-width: 1280px;
+
+
+  /* --main-light: #f6e652;
+  --main-dark: #c5ac10;
+  --second-dark: #524141;
+
+  --main-light: #a87651;
+  --main-dark: #56372f;
+  --second-dark: #2b303c; */
+
+  --background-color: #b6d9dc;
+  --main-dark: #416a83;
+  --main-light: #5294ac;
+  --second-dark: #314152;
+
+  background-color: var(--background-color);
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  max-width: 1280px;
+
+
 }
 
-.wrapper {
 
-  background-color: rgb(38, 38, 51);
-  /* display: flex; */
-  border: 4px solid white;
-  padding: .6rem;
+
+.wrapper {
+  background-color: var(--main-light);
   border-radius: .4rem;
+  border: 4px solid white;
+  gap: 2rem;
   outline: 3px solid grey;
-  gap: 2rem
+  padding: .6rem;
 }
 
 .moods {

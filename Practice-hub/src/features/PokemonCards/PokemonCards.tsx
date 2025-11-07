@@ -35,7 +35,7 @@ export function PokemonCard() {
 
     const pokemonStats = mapToList(pokemonData?.stats, (stat, i) => (
         <li key={i}>
-            {stat.stat.name}: {stat.base_stat}
+            <div>{stat.stat.name.toUpperCase()}:</div> {stat.base_stat}
         </li>
     ));
 
@@ -47,24 +47,36 @@ export function PokemonCard() {
         <>
             {console.log(errorHandler)}
             <SearchBar setSearchResult={setSearchResult} setErrorHandler={setErrorHandler} />
-            <section className={styles.pokemon_card}>
-                <div className="pokemon__wrapper">
-                    <h2 className="pokemon-card__header">{pokemonData?.name}</h2>
-                    <img
-                        width="200px"
-                        // width is hard coded for now !!!
-                        src={pokemonData?.sprites?.other["official-artwork"].front_default}
-                        alt={`pokemon named${pokemonData?.name}`}
-                    />
-                    <ul className="pokemon-card__types">{pokemonTypes}</ul>
+            {/* <div className={styles.pokemon_card}>
+                <p>This is the back of the card</p>
+            </div> */}
+            <div className={styles.pokemon_card}>
+                <div className={styles.black_border}>
+                    {" "}
+                    <section className={styles.pokemon_card_front}>
+                        <h2 className={styles.pokemon_card__header}>{pokemonData?.name}</h2>
+                        <div className={styles.image_border}>
+                            <ul className={styles.pokemon_card__types}>{pokemonTypes}</ul>
+                            <img
+                                className={styles.pokemon_card_img}
+                                src={pokemonData?.sprites?.other["official-artwork"].front_default}
+                                alt={`pokemon named${pokemonData?.name}`}
+                            />
+                        </div>
 
-                    <ul className="pokemon-card__stats">{pokemonStats}</ul>
-                    <ul className="pokemon-card__measures">
-                        <li>height: {pokemonData?.height}</li>
-                        <li>weight {pokemonData?.weight}</li>
-                    </ul>
+                        <ul className={styles.pokemon_card__stats}>{pokemonStats}</ul>
+                        <ul className="pokemon-card__measures">
+                            <li>
+                                <div>height:</div> {pokemonData?.height}
+                            </li>
+                            <li>
+                                <div>weight:</div>
+                                {pokemonData?.weight}
+                            </li>
+                        </ul>
+                    </section>
                 </div>
-            </section>
+            </div>
         </>
     );
 }
