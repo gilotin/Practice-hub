@@ -48,6 +48,7 @@ export function PokemonCard() {
                 width="30px"
                 src={pokemonTypesMap[type.type.name]}
                 alt={type.type.name}
+                title={type.type.name}
             />
         </li>
     ));

@@ -58,7 +58,7 @@ export default function SearchBar({ setSearchResult, setErrorHandler }: SearchBa
             return name.toLocaleLowerCase().includes(debouncedQuarry.toLocaleLowerCase());
         });
 
-        return results?.slice(0, 10)?.map((itemName) => {
+        return results?.slice(0, 100)?.map((itemName) => {
             return (
                 <li
                     tabIndex={0}
@@ -86,7 +86,19 @@ export default function SearchBar({ setSearchResult, setErrorHandler }: SearchBa
                         placeholder="Enter name or ID"
                     />
                     <button type="submit">SEARCH</button>
-                    {!searchedQuery ? "" : <ul>{filteredList()}</ul>}
+                    {!searchedQuery ? (
+                        ""
+                    ) : (
+                        <ul
+                            style={{
+                                maxHeight: "200px",
+                                overflow: "auto",
+                                // To remove it from here
+                            }}
+                        >
+                            {filteredList()}
+                        </ul>
+                    )}
                 </form>
             </div>
         </>
