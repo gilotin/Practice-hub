@@ -84,7 +84,7 @@ export function PokemonCard() {
                                         pokemonData?.sprites?.other["official-artwork"]
                                             .front_default
                                     }
-                                    alt={`pokemon named${pokemonData?.name}`}
+                                    alt={`pokemon named ${pokemonData?.name}`}
                                 />
                             </div>
 

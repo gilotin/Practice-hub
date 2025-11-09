@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import fetchAllPokemonNames from "../api/fetchAllPokemonName";
 import { useDebounce } from "../../../hooks/useDebounce";
 import type { ErrorState } from "../types";
+import styles from "./SearchBar.module.css";
 
 type SearchBarProps = {
     setSearchResult: React.Dispatch<React.SetStateAction<string>>;
@@ -75,7 +76,7 @@ export default function SearchBar({ setSearchResult, setErrorHandler }: SearchBa
 
     return (
         <>
-            <div className="wrapper">
+            <div className={styles.search_bar}>
                 <h1>Pokemon Cards</h1>
                 <form action={search}>
                     <input
@@ -83,21 +84,16 @@ export default function SearchBar({ setSearchResult, setErrorHandler }: SearchBa
                         onChange={(e) => OnChangeSearch(e)}
                         type="text"
                         name="query"
-                        placeholder="Enter name or ID"
+                        placeholder="Enter name"
                     />
-                    <button type="submit">SEARCH</button>
+
+                    <button className={styles.search_btn} type="submit">
+                        <img src="/search_icon.png" alt="search icon" />
+                    </button>
                     {!searchedQuery ? (
                         ""
                     ) : (
-                        <ul
-                            style={{
-                                maxHeight: "200px",
-                                overflow: "auto",
-                                // To remove it from here
-                            }}
-                        >
-                            {filteredList()}
-                        </ul>
+                        <ul className={styles.filtered_list}>{filteredList()}</ul>
                     )}
                 </form>
             </div>
