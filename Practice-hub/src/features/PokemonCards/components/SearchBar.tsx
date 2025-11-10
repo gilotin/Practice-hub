@@ -34,11 +34,13 @@ export default function SearchBar({ setSearchResult, setErrorHandler }: SearchBa
         };
     }, []);
 
-    function search(formData: FormData) {
-        const searchedResult = formData.get("query");
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        const result = formData.get("query");
 
-        if (typeof searchedResult === "string" && searchedResult.length > 0) {
-            return setSearchResult(searchedResult);
+        if (typeof result == "string" && result != "") {
+            setSearchResult(result);
         }
     }
 
@@ -48,7 +50,7 @@ export default function SearchBar({ setSearchResult, setErrorHandler }: SearchBa
         setSearchedQuery(value);
     }
 
-    function handleListClick(e: React.MouseEvent<HTMLLIElement>) {
+    function handleListClick(e: React.FormEvent<HTMLLIElement>) {
         const currentSearch = e.currentTarget.textContent;
         setSearchedQuery("");
         setSearchResult(currentSearch);
@@ -78,7 +80,7 @@ export default function SearchBar({ setSearchResult, setErrorHandler }: SearchBa
         <>
             <div className={styles.search_bar}>
                 <h1>Pokemon Cards</h1>
-                <form action={search}>
+                <form onSubmit={handleSubmit}>
                     <input
                         value={searchedQuery}
                         onChange={(e) => OnChangeSearch(e)}
