@@ -9,12 +9,21 @@ function App() {
     return (
         <>
             <BrowserRouter>
-                <Navigation />
-                <Routes>
-                    <Route path="/pokemon-card" element={<PokemonCard />} />
-                    <Route path="/mood-tracker" element={<MoodTracker />} />
-                    <Route path="/time-practice" element={<TimePracticeDisplay />} />
-                </Routes>
+                <header>
+                    <Navigation />
+                </header>
+                <main>
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={<div>Welcome! Choose a feature from the menu.</div>}
+                        />
+                        <Route path="/pokemon-card" element={<PokemonCard />} />
+                        <Route path="/mood-tracker" element={<MoodTracker />} />
+                        <Route path="/time-practice" element={<TimePracticeDisplay />} />
+                        <Route path="*" element={<div>404 - Page Not Found</div>} />
+                    </Routes>
+                </main>
             </BrowserRouter>
         </>
     );
