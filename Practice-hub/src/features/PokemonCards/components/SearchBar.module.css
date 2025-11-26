@@ -1,8 +1,8 @@
 .searchBar {
+    max-width: 30rem;
     background-color: var(--main-light);
     border-radius: .4rem;
     border: 4px solid white;
-    gap: 2rem;
     outline: 3px solid grey;
     padding: .6rem;
     display: block;
@@ -10,13 +10,11 @@
 
 }
 
-/*  TO ADD CONTAINER QUERIES!!! FOR SMALLER DISPLAYS  */
 
 .searchBar input {
-    width: 90%;
-    min-width: 6.25rem;
-    max-width: 18.75rem;
-
+    position: relative;
+    width: 110%;
+    max-width: 20rem;
 }
 
 
