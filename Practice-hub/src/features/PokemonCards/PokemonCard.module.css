@@ -1,12 +1,3 @@
-/*  
-
---gold-light: #f6e652;
-  --gold-light-dark: #f6bd20;
-  --gold-dark: #9c5200;
-  --dark-brown: #60443e; */
-
-
-
 *>li {
     list-style: none;
     display: flex;
