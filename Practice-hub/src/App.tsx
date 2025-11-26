@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { PokemonCard } from "./features/PokemonCards/PokemonCards";
 import { MoodTracker } from "./features/MoodTracker/MoodTracker";
 import { TimePracticeDisplay } from "./features/timerPractice/TimePractice";
-import { Navigation } from "./features/Navigation/Navigation";
+import { Navigation } from "./components/Navigation/Navigation";
+import { HomePage } from "./components/Homepage/HomePage";
 
 function App() {
     return (
@@ -14,10 +15,7 @@ function App() {
                 </header>
                 <main>
                     <Routes>
-                        <Route
-                            path="/"
-                            element={<div>Welcome! Choose a feature from the menu.</div>}
-                        />
+                        <Route path="/" element={<HomePage />} />
                         <Route path="/pokemon-card" element={<PokemonCard />} />
                         <Route path="/mood-tracker" element={<MoodTracker />} />
                         <Route path="/time-practice" element={<TimePracticeDisplay />} />
