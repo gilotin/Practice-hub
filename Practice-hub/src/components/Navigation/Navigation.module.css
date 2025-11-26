@@ -1,14 +1,27 @@
 .nav {
-
     display: flex;
     gap: 3rem;
     justify-content: center;
     padding: 1rem;
     border: 3px solid black;
-    margin: 1rem;
+    margin-bottom: 2.5rem;
     background-color: darkgrey;
     border-radius: .6rem;
+    flex-wrap: wrap;
 }
+
+@media (width < 960px) {
+    .nav {
+        margin-bottom: 1rem;
+        align-items: center;
+        flex-direction: column;
+        gap: .4rem;
+        padding: .4rem;
+        border: 3px solid black;
+    }
+}
+
+
 
 .nav a {
     all: unset;
