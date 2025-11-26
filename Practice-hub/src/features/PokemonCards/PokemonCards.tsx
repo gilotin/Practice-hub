@@ -64,22 +64,22 @@ export function PokemonCard() {
         <>
             <SearchBar setSearchResult={setSearchResult} setErrorHandler={setErrorHandler} />
             {errorHandler.hasError ? (
-                <div className={styles.pokemon_card}>
-                    <img className={styles.pokemon_card__img} src="/poketball.png" alt="" />
-                    <p className={styles.pokemon_card__text}>{errorHandler?.message}</p>
+                <div className={styles.pokemonCard}>
+                    <img className={styles.pokemonCardBack} src="/poketball.png" alt="" />
+                    <p className={styles.pokemonCardText}>{errorHandler?.message}</p>
                 </div>
             ) : (
-                <div className={styles.pokemon_card}>
-                    <div className={styles.black_border}>
+                <div className={styles.pokemonCard}>
+                    <div className={styles.blackBorder}>
                         {" "}
-                        <section className={styles.pokemon_card_front}>
-                            <h2 className={styles.pokemon_card__header}>
+                        <section className={styles.pokemonCardFront}>
+                            <h2 className={styles.pokemonCardHeader}>
                                 {capitalizeFirstLetter(pokemonData?.name)}
                             </h2>
-                            <div className={styles.image_border}>
-                                <ul className={styles.pokemon_card__types}>{pokemonTypes}</ul>
+                            <div className={styles.imageBorder}>
+                                <ul className={styles.pokemonCardTypes}>{pokemonTypes}</ul>
                                 <img
-                                    className={styles.pokemon_card_img}
+                                    className={styles.pokemonCardImg}
                                     src={
                                         pokemonData?.sprites?.other["official-artwork"]
                                             .front_default
@@ -88,7 +88,7 @@ export function PokemonCard() {
                                 />
                             </div>
 
-                            <ul className={styles.pokemon_card__stats}>{pokemonStats}</ul>
+                            <ul className={styles.pokemonCard__stats}>{pokemonStats}</ul>
                             <ul className="pokemon-card__measures">
                                 <li>
                                     <div>Height:</div> {pokemonData?.height}

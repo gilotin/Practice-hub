@@ -78,8 +78,8 @@ export default function SearchBar({ setSearchResult, setErrorHandler }: SearchBa
 
     return (
         <>
-            <div className={styles.search_bar}>
-                <h1>Pokemon Cards</h1>
+            <div className={styles.searchBar}>
+                <h2 className={styles.searchHeader}>Pokemon Cards</h2>
                 <form onSubmit={handleSubmit}>
                     <input
                         value={searchedQuery}
@@ -89,13 +89,13 @@ export default function SearchBar({ setSearchResult, setErrorHandler }: SearchBa
                         placeholder="Enter name"
                     />
 
-                    <button className={styles.search_btn} type="submit">
+                    <button className={styles.searchBtn} type="submit">
                         <img src="/search_icon.png" alt="search icon" />
                     </button>
                     {!searchedQuery ? (
                         ""
                     ) : (
-                        <ul className={styles.filtered_list}>{filteredList()}</ul>
+                        <ul className={styles.filteredList}>{filteredList()}</ul>
                     )}
                 </form>
             </div>
