@@ -8,6 +8,7 @@
 
 ul {
     padding: .6rem;
+    text-align: start;
 }
 
 
@@ -30,6 +31,7 @@ ul {
     border: 5px solid var(--second-dark);
     border-radius: 0.8rem;
     margin: auto;
+    width: 95%;
     background-color: var(--main-dark);
     display: flex;
     flex-direction: column;
@@ -41,8 +43,7 @@ ul {
 }
 
 .pokemonCardImg {
-    max-width: 200px;
-    justify-content: center;
+    max-width: 12rem;
     margin: auto;
 }
 
