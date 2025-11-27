@@ -1,3 +1,4 @@
+import styles from "./MoodTracker.module.css";
 import { useEffect, useState } from "react";
 
 export function MoodTracker() {
@@ -37,37 +38,37 @@ export function MoodTracker() {
 
     return (
         <>
-            <div className="wrapper">
-                <section className="moods">
-                    <button id="happy" onClick={onClickHandler} className="btn">
+            <div className={styles.moodTrackerWrapper}>
+                <section className={styles.moodSectionList}>
+                    <button id="happy" onClick={onClickHandler} className={styles.moodButton}>
                         Happy
                     </button>
-                    <button id="sad" onClick={onClickHandler} className="btn">
+                    <button id="sad" onClick={onClickHandler} className={styles.moodButton}>
                         Sad
                     </button>
-                    <button id="tired" onClick={onClickHandler} className="btn">
+                    <button id="tired" onClick={onClickHandler} className={styles.moodButton}>
                         Tired
                     </button>
-                    <button id="angry" onClick={onClickHandler} className="btn">
+                    <button id="angry" onClick={onClickHandler} className={styles.moodButton}>
                         Angry
                     </button>
-                    <button id="calm" onClick={onClickHandler} className="btn">
+                    <button id="calm" onClick={onClickHandler} className={styles.moodButton}>
                         Calm
                     </button>
                 </section>
-                <section className="redact">
-                    <button id="undo" onClick={undoMood} className="btn">
+                <section className={styles.redact}>
+                    <button id="undo" onClick={undoMood} className={styles.moodButton}>
                         Undo
                     </button>
                 </section>
-                <section className="history">
+                <section className={styles.moodHistory}>
                     <p>Mood History:</p>
                     <p>{moodHistory.join(", ")}</p>
                 </section>
 
-                <section className="top-mood">
+                <section className={styles.topMood}>
                     <p>
-                        Most recent mood: <span className="highlight-mood">{topMood}</span>
+                        Most recent mood: <span className={styles.moodHighlight}>{topMood}</span>
                     </p>
                 </section>
             </div>

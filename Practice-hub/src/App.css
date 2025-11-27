@@ -23,7 +23,7 @@
 
 }
 
-
+/* 
 .wrapper {
   background-color: var(--main-light);
   border-radius: .4rem;
@@ -69,11 +69,11 @@
   margin: 1rem;
   border: 1px solid white;
   border-radius: .6rem;
-}
+} */
 
 
 /* Time practice game */
-
+/* 
 .wrapper-time-practice {
   min-width: 360px;
   min-height: 300px;
@@ -169,4 +169,4 @@
       rgba(0, 0, 0, 0) 0,
       rgba(0, 0, 0, 0.05) 1px);
   border-radius: 0.4rem;
-}
+} */
