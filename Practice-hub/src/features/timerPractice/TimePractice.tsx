@@ -1,4 +1,6 @@
+import styles from "./TimePractice.module.css";
 import { useState, useEffect } from "react";
+
 export function TimePracticeDisplay() {
     const [showCountdown, setShowCountdown] = useState<boolean>(false);
     const [lockButton, setLockButton] = useState<boolean>(false);
@@ -46,24 +48,28 @@ export function TimePracticeDisplay() {
 
     return (
         <>
-            <div className="wrapper-time-practice">
-                <section className="score-board">
+            <div className={styles.timePracticeWrapper}>
+                <section className={styles.scoreBoard}>
                     <p>Best time: {score} ms </p>
                 </section>
                 {lockButton && showCountdown ? (
-                    <section onClick={handleSpeedClickButton} className="game-section">
-                        <p className="glow-text">Click!!!</p>
+                    <section onClick={handleSpeedClickButton} className={styles.gameSection}>
+                        <p className={styles.glowText}>Click!!!</p>
                     </section>
                 ) : (
-                    <section className="game-section">
-                        <p className="glow-text">Press Start</p>
+                    <section className={styles.gameSection}>
+                        <p className={styles.glowText}>Press Start</p>
                     </section>
                 )}
-                <section className="user-interface">
-                    <button className="start-btn" disabled={lockButton} onClick={OnClickStartBtn}>
+                <section className={styles.userInterface}>
+                    <button
+                        className={styles.startButton}
+                        disabled={lockButton}
+                        onClick={OnClickStartBtn}
+                    >
                         START
                     </button>
-                    <button className="reset-btn" onClick={onClickResetBtn}>
+                    <button className={styles.resetButton} onClick={onClickResetBtn}>
                         RESET
                     </button>
                 </section>

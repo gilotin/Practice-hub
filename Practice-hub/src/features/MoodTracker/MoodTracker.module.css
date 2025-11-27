@@ -1,10 +1,12 @@
 .moodTrackerWrapper {
+    max-width: 34rem;
     background-color: var(--main-light);
     border-radius: .4rem;
     border: 4px solid white;
     gap: 2rem;
     outline: 3px solid grey;
     padding: .6rem;
+    margin: auto;
 }
 
 .moodSectionList {
@@ -32,8 +34,8 @@
     margin: 1rem 0;
 }
 
-#undo {
-    background-color: rgb(66, 34, 34);
+.undoButton {
+    background-color: rgb(215, 42, 42);
 }
 
 .moodHistory {

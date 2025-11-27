@@ -57,7 +57,11 @@ export function MoodTracker() {
                     </button>
                 </section>
                 <section className={styles.redact}>
-                    <button id="undo" onClick={undoMood} className={styles.moodButton}>
+                    <button
+                        id="undo"
+                        onClick={undoMood}
+                        className={`${styles.moodButton} ${styles.undoButton}`}
+                    >
                         Undo
                     </button>
                 </section>
