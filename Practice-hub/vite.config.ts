@@ -1,4 +1,4 @@
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react-swc";
 import Checker from "vite-plugin-checker";
 
@@ -9,5 +9,11 @@ export default defineConfig({
         host: true, // allows access from LAN (0.0.0.0)
         port: 5173, // optional, default is 5173
         strictPort: false, // true will fail if port is taken, false will pick next available
+    },
+    // Add this test section:
+    test: {
+        environment: "jsdom",
+        globals: true,
+        setupFiles: "./src/test/setup.ts",
     },
 });
