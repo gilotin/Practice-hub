@@ -2,6 +2,8 @@ import { describe, it, expect } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MoodTracker } from "./MoodTracker";
 
+//NOTE: This is the first test for learning purposes and it's wrote by Claude.
+
 describe("MoodTracker - undoMood function", () => {
     it("should remove the most recent mood when undo is clicked", () => {
         render(<MoodTracker />);
