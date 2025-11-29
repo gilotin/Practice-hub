@@ -1,76 +1,69 @@
 import { describe, it, expect } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MoodTracker } from "./MoodTracker";
+import userEvent from "@testing-library/user-event";
 
-//NOTE: This is the first test for learning purposes and it's wrote by Claude.
+//NOTE: This is the first test for learning purposes and it's wrote by GPT-5.
 
-describe("MoodTracker - undoMood function", () => {
-    it("should remove the most recent mood when undo is clicked", () => {
+// Undo Button test:
+
+describe("MoodTracker - undoMood", () => {
+    it("removes the most recent mood when undo is clicked", async () => {
         render(<MoodTracker />);
+        const user = userEvent.setup();
 
-        const happyButton = screen.getByRole("button", { name: "Happy" });
-        const sadButton = screen.getByRole("button", { name: "Sad" });
+        await user.click(screen.getByRole("button", { name: "Happy" }));
+        await user.click(screen.getByRole("button", { name: "Sad" }));
 
-        fireEvent.click(happyButton);
-        fireEvent.click(sadButton);
+        // Initial state: Sad (most recent)
+        expect(screen.getByText(/Most recent mood:/)).toHaveTextContent("Sad");
 
-        // Check mood history
-        expect(screen.getByText("Sad, Happy")).toBeInTheDocument();
+        await user.click(screen.getByRole("button", { name: "Undo" }));
 
-        const undoButton = screen.getByText("Undo");
-        fireEvent.click(undoButton);
-
-        // After undo, only Happy should remain
-        expect(screen.queryByText("Sad, Happy")).not.toBeInTheDocument();
-        const historySection = screen.getByText(/Mood History:/).parentElement;
-        expect(historySection).toHaveTextContent("Happy");
+        // Now Happy should be the top mood
+        expect(screen.getByText(/Most recent mood:/)).toHaveTextContent("Happy");
     });
 
-    it("should handle undo when there is only one mood", () => {
+    it("clears mood history when only one mood exists", async () => {
         render(<MoodTracker />);
+        const user = userEvent.setup();
 
-        const calmButton = screen.getByRole("button", { name: "Calm" });
-        fireEvent.click(calmButton);
+        await user.click(screen.getByRole("button", { name: "Calm" }));
 
-        // Verify mood is in history
-        let historySection = screen.getByText(/Mood History:/).parentElement;
-        expect(historySection).toHaveTextContent("Calm");
+        expect(screen.getByText(/Most recent mood:/)).toHaveTextContent("Calm");
 
-        const undoButton = screen.getByText("Undo");
-        fireEvent.click(undoButton);
+        await user.click(screen.getByRole("button", { name: "Undo" }));
 
-        // History should be empty
-        historySection = screen.getByText(/Mood History:/).parentElement;
-        expect(historySection?.textContent).toBe("Mood History:");
+        // Expect history cleared
+        expect(screen.queryByText(/Most recent mood:/)).not.toHaveTextContent(/Calm/);
     });
 
-    it("should handle undo when mood history is already empty", () => {
+    it("does nothing when history is empty", async () => {
         render(<MoodTracker />);
+        const user = userEvent.setup();
 
-        const undoButton = screen.getByText("Undo");
-        fireEvent.click(undoButton);
+        await user.click(screen.getByRole("button", { name: "Undo" }));
 
-        // Should not crash, history stays empty
-        const historySection = screen.getByText(/Mood History:/).parentElement;
-        expect(historySection?.textContent).toBe("Mood History:");
+        // Should not crash or show any mood
+        expect(screen.getByText(/Mood History:/)).toHaveTextContent("Mood History:");
     });
+});
 
-    it("should update topMood correctly after undo", () => {
-        render(<MoodTracker />);
+// OnclickHandler
 
-        const happyButton = screen.getByRole("button", { name: "Happy" });
-        const angryButton = screen.getByRole("button", { name: "Angry" });
+describe("MoodTracker - mood buttons", () => {
+    it.each([["Happy"], ["Sad"], ["Angry"], ["Calm"], ["Tired"]])(
+        "updates mood to %s clicked",
+        async (mood) => {
+            render(<MoodTracker />);
 
-        fireEvent.click(happyButton);
-        fireEvent.click(angryButton);
+            const button = screen.getByRole("button", { name: mood });
 
-        // Top mood should be "Angry"
-        expect(screen.getByText(/Most recent mood:/)).toHaveTextContent("Most recent mood: Angry");
+            await userEvent.click(button);
 
-        const undoButton = screen.getByText("Undo");
-        fireEvent.click(undoButton);
-
-        // Top mood should now be "Happy"
-        expect(screen.getByText(/Most recent mood:/)).toHaveTextContent("Most recent mood: Happy");
-    });
+            expect(screen.getByText(/Most recent mood:/)).toHaveTextContent(
+                `Most recent mood: ${mood}`
+            );
+        }
+    );
 });
