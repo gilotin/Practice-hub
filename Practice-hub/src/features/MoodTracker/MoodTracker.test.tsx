@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { MoodTracker } from "./MoodTracker";
 import userEvent from "@testing-library/user-event";
 
@@ -66,4 +66,55 @@ describe("MoodTracker - mood buttons", () => {
             );
         }
     );
+});
+
+// Testing Effects (updating mood History)
+
+describe("MoodTracker - updated history", () => {
+    it("shows empty history after the update and most recent mood to none", async () => {
+        render(<MoodTracker />);
+        expect(screen.getByText(/Mood History:/)).toHaveTextContent("Mood History:");
+        expect(screen.getByText(/Most recent mood:/)).toHaveTextContent("Most recent mood: none");
+    });
+
+    it("updates the history and the recent mood", async () => {
+        render(<MoodTracker />);
+        const button = screen.getByRole("button", { name: "Happy" });
+
+        await userEvent.click(button);
+
+        expect(screen.getByText(/Most recent mood:/)).toHaveTextContent("Most recent mood: Happy");
+
+        const historySection = screen.getByText("Mood History:").parentElement;
+
+        if (!historySection) {
+            throw new Error("history section not found");
+        }
+
+        const happyResult = within(historySection).getByText("Happy");
+        expect(happyResult).toHaveTextContent("Happy");
+    });
+
+    it("updates recent mood after pressing different moods", async () => {
+        render(<MoodTracker />);
+
+        function moodButtons(name: string) {
+            return screen.getByRole("button", { name: name });
+        }
+
+        await userEvent.click(moodButtons("Happy"));
+        await userEvent.click(moodButtons("Calm"));
+        await userEvent.click(moodButtons("Sad"));
+
+        expect(screen.getByText(/Most recent mood:/)).toHaveTextContent("Most recent mood: Sad");
+
+        await userEvent.click(moodButtons("Undo"));
+
+        expect(screen.getByText(/Most recent mood:/)).toHaveTextContent("Most recent mood: Calm");
+
+        await userEvent.click(moodButtons("Undo"));
+        await userEvent.click(moodButtons("Undo"));
+
+        expect(screen.getByText(/Most recent mood:/)).toHaveTextContent("Most recent mood: none");
+    });
 });
