@@ -21,6 +21,7 @@ export function PokemonCard() {
             try {
                 const data = await fetchData<PokemonData>(url, signal);
                 setPokemonData(data);
+                console.log(data);
             } catch (err: unknown) {
                 if (err instanceof Error && err.name !== "AbortError") {
                     setErrorHandler({ hasError: true, message: err.message });
