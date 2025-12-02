@@ -1,21 +1,21 @@
 import styles from "./TimePractice.module.css";
 import { useState, useEffect } from "react";
 
-export function TimePracticeDisplay() {
+const LOWER_INTEGER: number = 1;
+
+export function generateRandomDelay() {
+    return (Math.floor(Math.random() * 3) + LOWER_INTEGER) * 1000;
+}
+
+export function TimePractice() {
     const [showCountdown, setShowCountdown] = useState<boolean>(false);
     const [lockButton, setLockButton] = useState<boolean>(false);
     const [delayedStart, setDelayedStart] = useState<number>(0);
     const [startTime, setStartTime] = useState<number>(0);
     const [score, setScore] = useState<string>("0");
 
-    const LOWER_INTEGER: number = 1;
-
-    function generateNumber() {
-        return (Math.floor(Math.random() * 3) + LOWER_INTEGER) * 1000;
-    }
-
     useEffect(() => {
-        setDelayedStart(generateNumber());
+        setDelayedStart(generateRandomDelay());
     }, []);
 
     function OnClickStartBtn(e: React.MouseEvent<HTMLButtonElement>) {
@@ -28,14 +28,14 @@ export function TimePracticeDisplay() {
     }
 
     function onClickResetBtn() {
-        setDelayedStart(generateNumber());
+        setDelayedStart(generateRandomDelay());
         setShowCountdown(false);
         setLockButton(false);
         setStartTime(0);
         setScore("0");
     }
 
-    function handleSpeedClickButton() {
+    function handleSpeedCalculation() {
         const clickTime = generateTime();
         const result = (clickTime - startTime).toFixed();
         setScore(result);
@@ -53,7 +53,7 @@ export function TimePracticeDisplay() {
                     <p>Best time: {score} ms </p>
                 </section>
                 {lockButton && showCountdown ? (
-                    <section onClick={handleSpeedClickButton} className={styles.gameSection}>
+                    <section onClick={handleSpeedCalculation} className={styles.gameSection}>
                         <p className={styles.glowText}>Click!!!</p>
                     </section>
                 ) : (
