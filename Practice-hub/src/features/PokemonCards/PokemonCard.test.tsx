@@ -1,5 +1,5 @@
-import { describe, it, expect, MockedFunction, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, expect, vi, MockedFunction } from "vitest";
+import { render, screen, within } from "@testing-library/react";
 import { PokemonCard } from "./PokemonCards";
 import fetchData from "./api/fetchPokemonData";
 
@@ -19,6 +19,10 @@ const fakeData = {
     stats: [
         { base_stat: 45, stat: { name: "hp" } },
         { base_stat: 49, stat: { name: "attack" } },
+        { base_stat: 49, stat: { name: "defense" } },
+        { base_stat: 65, stat: { name: "special-attack" } },
+        { base_stat: 65, stat: { name: "special-defense" } },
+        { base_stat: 45, stat: { name: "speed" } },
     ],
     sprites: {
         other: {
@@ -29,24 +33,65 @@ const fakeData = {
     },
 };
 
-describe("PokemonCard", () => {
-    it("loads initial data from the API", async () => {
-        // 1. Make the mock return fake data
-        const mockedFetchData = fetchData as MockedFunction<typeof fetchData>;
-        mockedFetchData.mockResolvedValue(fakeData);
+describe("PokemonCard - API Rendering", () => {
+    it.each([
+        ["name", "bulbasaur", "header"],
+        ["hp", 45, "stat"],
+        ["attack", 49, "stat"],
+        ["defense", 49, "stat"],
+        ["special-attack", 65, "stat"],
+        ["special-defense", 65, "stat"],
+        ["speed", 45, "stat"],
+    ])("renders %s correctly", async (statName, value, type) => {
+        const mockedFetch = fetchData as MockedFunction<typeof fetchData>;
+        mockedFetch.mockResolvedValue(fakeData);
 
-        // 2. Render the component
         render(<PokemonCard />);
-        screen.debug();
-        // 3. Wait for UI to update
 
-        // 4. You will write your own expectations below:
-        expect(await screen.findByText(/Bulbasaur/i)).toBeInTheDocument();
+        if (type === "header") {
+            expect(await screen.findByText(/Bulbasaur/i)).toBeInTheDocument();
+        }
 
-        // Add your own:
-        // - image
-        // - height
-        // - weight
-        // - stats
+        if (type === "stat") {
+            await screen.findByText(/hp/i);
+
+            const allListItems = screen.getAllByRole("listitem");
+
+            const normalizedStatName = statName.toString().replace(/-/g, "[\\s-]");
+            const regex = new RegExp(`${normalizedStatName}:\\s*${value}`, "i");
+
+            const statElement = allListItems.find((li) => {
+                const text = li.textContent || "";
+                return regex.test(text);
+            });
+
+            expect(statElement).toBeDefined();
+            expect(statElement).toBeInTheDocument();
+        }
+    });
+
+    it("renders height & weight", async () => {
+        const mockedFetch = fetchData as MockedFunction<typeof fetchData>;
+        mockedFetch.mockResolvedValue(fakeData);
+
+        render(<PokemonCard />);
+
+        await screen.findByText(/height/i);
+
+        expect(screen.getByText(/height:/i)).toBeInTheDocument();
+        expect(screen.getByText("7")).toBeInTheDocument();
+
+        expect(screen.getByText(/weight:/i)).toBeInTheDocument();
+        expect(screen.getByText("69")).toBeInTheDocument();
+    });
+
+    it("renders the pokemon artwork", async () => {
+        const mockedFetch = fetchData as MockedFunction<typeof fetchData>;
+        mockedFetch.mockResolvedValue(fakeData);
+
+        render(<PokemonCard />);
+
+        const img = await screen.findByAltText(/pokemon named bulbasaur/i);
+        expect(img).toHaveAttribute("src", "/fake.png");
     });
 });
